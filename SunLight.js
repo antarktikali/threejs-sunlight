@@ -58,11 +58,14 @@ SunLight.prototype.updateOrientation = function ( update_date_ = true ) {
 	if ( update_date_ ) { 
 		this.localDate = new Date();
 	}
-	// TODO
-	// Just add some random values for now for demonstration purposes
-	// 26.07.2016 16:30 in Helsinki
-	this.azimuth = this._degreesToRadians( 254.07 );
-	this.elevation = this._degreesToRadians( 31.01 );
+
+	var sunOrientation = getAzEl(
+			this.coordinates.x,
+			this.coordinates.y,
+			this.localDate
+		);
+	this.azimuth = this._degreesToRadians( sunOrientation.azimuth );
+	this.elevation = this._degreesToRadians( sunOrientation.elevation );
 }
 
 // Updates the directional light based on the sun's orientation and the north

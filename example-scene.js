@@ -52,14 +52,15 @@ function createScene () {
 
 	// Create the sun light and add it to the scene
 	var sunLight = new SunLight(
-		new THREE.Vector2( 0.0, 0.0 ),
+		// Oulu
+		new THREE.Vector2( 65.05, 25.47 ),
 		new THREE.Vector3( 0.0, 0.0, 1.0 ),
 		new THREE.Vector3( -1.0, 0.0, 0.0 ),
 		new THREE.Vector3( 0.0, -1.0, 0.0 )
 	);
 	root.add( sunLight );
 
-	sunLight.updateOrientation();
+	sunLight.updateOrientation(true);
 	sunLight.updateDirectionalLight();
 
 	// Adjust the directional light's shadow camera dimensions
