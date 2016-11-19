@@ -79,6 +79,18 @@ SunLight.prototype.updateOrientation = function ( update_date_ = true ) {
 // vector. This is actually done by rotating the hinge object which is the
 // parent of the directional light.
 SunLight.prototype.updateDirectionalLight = function () {
+	// If the elevation is less than zero, there is no sun light.
+	// Starting from 2 degrees, start fading the light
+	var FADE_OUT_THRESHOLD = 2.0;
+	var elevationDegrees = (180.0 * this.elevation / Math.PI );
+	if ( elevationDegrees <= 0.0 ) {
+		this.directionalLight.intensity = 0.0;
+		return;
+	} else if ( elevationDegrees <= FADE_OUT_THRESHOLD) {
+		this.directionalLight.intensity = elevationDegrees / FADE_OUT_THRESHOLD;
+	} else {
+		this.directionalLight.intensity = 1.0;
+	}
 	// Reset the hingeObject's quaternion
 	this.hingeObject.quaternion.copy( new THREE.Quaternion() );
 
