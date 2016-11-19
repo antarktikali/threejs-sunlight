@@ -37,6 +37,11 @@ SunLight = function ( coordinates_, north_, east_, nadir_ ) {
 	this.directionalLight = new THREE.DirectionalLight(); 
 	this.directionalLight.castShadow = true;
 	this.hingeObject.add( this.directionalLight );
+
+	// Add the target of the directional light as a child to this object, so
+	// that it's world matrix gets updated automatically when this object's
+	// position is changed.
+	this.add( this.directionalLight.target );
 };
 
 SunLight.prototype = Object.assign(
@@ -74,6 +79,9 @@ SunLight.prototype.updateOrientation = function ( update_date_ = true ) {
 // vector. This is actually done by rotating the hinge object which is the
 // parent of the directional light.
 SunLight.prototype.updateDirectionalLight = function () {
+	// Reset the hingeObject's quaternion
+	this.hingeObject.quaternion.copy( new THREE.Quaternion() );
+
 	this.directionalLight.position.copy( this.north );
 	var rotator = new THREE.Quaternion();
 	rotator.setFromAxisAngle( this.east, this.elevation );
