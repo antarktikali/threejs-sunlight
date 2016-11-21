@@ -1,4 +1,10 @@
-SunLight = function ( coordinates_, north_, east_, nadir_ ) {
+SunLight = function (
+		coordinates_,
+		north_,
+		east_,
+		nadir_,
+		sun_distance_ = 1.0
+	) {
 	THREE.Object3D.call( this );
 	this.type = "SunLight";
 
@@ -18,6 +24,11 @@ SunLight = function ( coordinates_, north_, east_, nadir_ ) {
 	// The unit vector that is pointing the ground in the scene, same as gravity
 	this.nadir = new THREE.Vector3();
 	this.nadir.copy( nadir_ );
+
+	// The distance of the directional light from this object and it's target.
+	// the given north vector is multiplied with this value and the resulting
+	// vector is the displacement of the directional light from the target.
+	this.sun_distance = sun_distance_;
 
 	// The azimuth of the sun. Starts from the north, clockwise. In radians.
 	this.azimuth = 0.0;
@@ -95,6 +106,7 @@ SunLight.prototype.updateDirectionalLight = function () {
 	this.hingeObject.quaternion.copy( new THREE.Quaternion() );
 
 	this.directionalLight.position.copy( this.north );
+	this.directionalLight.position.multiplyScalar( this.sun_distance );
 	var rotator = new THREE.Quaternion();
 	rotator.setFromAxisAngle( this.east, this.elevation );
 	this.hingeObject.quaternion.premultiply( rotator );
