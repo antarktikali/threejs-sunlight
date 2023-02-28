@@ -8,17 +8,19 @@
 		</style>
 	</head>
 	<body>
-		<script async src="https://3dpk.co.uk/jsModules/es-module-shims.js"></script>
+		<script async src="./jsModules/es-module-shims.js"></script>
 
 		<script type="importmap">
 		    {
 			"imports": {
-			    "three": "https://3dpk.co.uk/R148/build/three.module.js",
-			    "addons/": "https://3dpk.co.uk/R148/examples/jsm/"
+			    "three": "./build/three.module.js",
+			    "addons/": "./examples/jsm/"
 			}
 		    }
 		</script>
 		<div class="container" id="container"></div>
+		
+		<script type="module" src="./example-scene.js"></script>
 	</body>
 </html>
 
