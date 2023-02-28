@@ -1,3 +1,10 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'addons/controls/OrbitControls.js'
+import { SunLight } from './sunlightNew.js'
+
+let container = document.querySelector('#container'); 
+let widdi = container.offsetWidth;
+let hiddi = container.offsetHeight;
 var scene, root, renderer, camera, controls;
 init();
 createScene();
@@ -5,12 +12,12 @@ animate();
 
 function init () {
 	scene = new THREE.Scene();
-	root = new THREE.Object3D();
+	root = new THREE.Group();
 	scene.add( root );
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.shadowMap.enabled = true;
-	document.body.appendChild( renderer.domElement );
+	container.appendChild( renderer.domElement );
 	camera = new THREE.PerspectiveCamera(
 		75,
 		window.innerWidth / window.innerHeight,
@@ -18,7 +25,7 @@ function init () {
 		1000.0
 	);
 	camera.position.z = 50.0;
-	controls = new THREE.OrbitControls( camera );
+	controls = new OrbitControls( camera, renderer.domElement );
 	controls.addEventListener( "change", render );
 }
 
@@ -53,10 +60,11 @@ function createScene () {
 	// Create the sun light and add it to the scene
 	var sunLight = new SunLight(
 		// Oulu
-		new THREE.Vector2( 65.05, 25.47 ),
-		new THREE.Vector3( 0.0, 0.0, 1.0 ),
-		new THREE.Vector3( -1.0, 0.0, 0.0 ),
-		new THREE.Vector3( 0.0, -1.0, 0.0 )
+				new THREE.Vector2( 36.77, -119.41 ),
+				new THREE.Vector3( 0.0, 0.0, 1.0 ),
+				new THREE.Vector3( -1.0, 0.0, 0.0 ),
+				new THREE.Vector3( 0.0, -1.0, 0.0 ),
+    20
 	);
 	root.add( sunLight );
 
@@ -68,6 +76,8 @@ function createScene () {
 	sunLight.directionalLight.shadow.camera.left = -30.0;
 	sunLight.directionalLight.shadow.camera.top = 30.0;
 	sunLight.directionalLight.shadow.camera.bottom = -30.0;
+  
+  root.add(new THREE.CameraHelper(sunLight.directionalLight.shadow.camera));
 }
 
 function createBox ( width_, height_, depth_, color_ = 0xffffff ) {
@@ -78,4 +88,3 @@ function createBox ( width_, height_, depth_, color_ = 0xffffff ) {
 	cube.receiveShadow = true;
 	return cube;
 }
-
