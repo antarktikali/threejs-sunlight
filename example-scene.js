@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'addons/controls/OrbitControls.js'
-import { SunLight } from './sunlightNew.js'
+import { SunLight } from './SunLight.js'
 
 let container = document.querySelector('#container'); 
 let widdi = container.offsetWidth;
