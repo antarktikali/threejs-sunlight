@@ -6,12 +6,24 @@
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 		</style>
+		
+		<script async src="./jsModules/es-module-shims.js"></script>
+		<script type="importmap">
+		    {
+			"imports": {
+			    "three": "./build/three.module.js",
+			    "addons/": "./examples/jsm/"
+			}
+		    }
+		</script>
 	</head>
 	<body>
-		<script src="./lib/three.js"></script>
-		<script src="./lib/OrbitControls.js"></script>
-		<script src="SunLight.js"></script>
-		<script src="example-scene.js"></script>
+
+		<div class="container" id="container"></div>
+		
+		
 	</body>
+	
+	<script type="module" src="./example-scene.js"></script>
 </html>
 
